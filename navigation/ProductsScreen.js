@@ -126,49 +126,58 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "whitesmoke",
-    padding: 15
+    backgroundColor: "ivory",
+    padding: 20
   },
 
   title: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: "bold",
-    color: "seagreen",
-    marginBottom: 15
+    color: "darkgreen",
+    marginBottom: 20
   },
 
   search: {
     backgroundColor: "white",
     borderWidth: 1,
     borderColor: "lightgray",
-    borderRadius: 10,
-    padding: 12,
-    marginBottom: 15
+    borderRadius: 15,
+    padding: 14,
+    fontSize: 16,
+    marginBottom: 18
   },
 
   categories: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 15
+    marginBottom: 20
   },
 
   categoryButton: {
-    backgroundColor: "lightgreen",
+    backgroundColor: "honeydew",
     paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 8
+    paddingHorizontal: 13,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "lightgreen"
   },
 
   cartButton: {
     backgroundColor: "seagreen",
-    padding: 15,
-    borderRadius: 10,
+    padding: 16,
+    borderRadius: 15,
     alignItems: "center",
-    marginTop: 10
+    marginTop: 10,
+
+    shadowColor: "black",
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 4
   },
 
   cartButtonText: {
     color: "white",
+    fontSize: 16,
     fontWeight: "bold"
   }
 
