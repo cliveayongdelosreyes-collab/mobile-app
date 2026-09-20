@@ -53,46 +53,52 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "honeydew",
-
+    backgroundColor: "ivory",
     justifyContent: "center",
     alignItems: "center",
-
-    padding: 25
+    padding: 30
   },
 
-    logo: {
-    width: 180,
-    height: 180,
+  logo: {
+    width: 190,
+    height: 190,
     resizeMode: "contain",
-    borderRadius: 50,
+    borderRadius: 40,
+    marginBottom: 20
   },
 
   title: {
-    fontSize: 38,
+    fontSize: 36,
     fontWeight: "bold",
-    color: "seagreen",
+    color: "darkgreen",
     textAlign: "center"
   },
 
   subtitle: {
     fontSize: 20,
-    marginTop: 5
+    color: "dimgray",
+    marginTop: 8
   },
 
   message: {
     fontSize: 16,
+    color: "gray",
     textAlign: "center",
-    marginTop: 25,
-    marginBottom: 30
+    marginTop: 15,
+    marginBottom: 35
   },
 
   button: {
     backgroundColor: "seagreen",
     width: "100%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center"
+    padding: 17,
+    borderRadius: 15,
+    alignItems: "center",
+
+    shadowColor: "black",
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
+    elevation: 4
   },
 
   buttonText: {
@@ -102,8 +108,14 @@ const styles = StyleSheet.create({
   },
 
   cartButton: {
+    backgroundColor: "white",
+    width: "100%",
+    padding: 15,
+    borderRadius: 15,
+    alignItems: "center",
     marginTop: 15,
-    padding: 15
+    borderWidth: 1,
+    borderColor: "seagreen"
   },
 
   cartText: {
