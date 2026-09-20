@@ -1,21 +1,22 @@
 import React from "react";
-import {View, Text, TouchableOpacity, StyleSheet} from "react-native";
+import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native";
 
 const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
 
-      <Text style={styles.logo}>
-        🐾
-      </Text>
+      <Image
+      source={require("../assets/logo.png")}
+      style={styles.logo}
+      />
 
       <Text style={styles.title}>
-        Kahayupang Hanap Buhay Pet Store
+        Kahayupang Hanap Buhay
       </Text>
 
       <Text style={styles.subtitle}>
-        Kahayupang Hanap Buhay - Pet Supplies
+       Pet Supplies
       </Text>
 
       <Text style={styles.message}>
@@ -60,14 +61,18 @@ const styles = StyleSheet.create({
     padding: 25
   },
 
-  logo: {
-    fontSize: 80
+    logo: {
+    width: 180,
+    height: 180,
+    resizeMode: "contain",
+    borderRadius: 50,
   },
 
   title: {
     fontSize: 38,
     fontWeight: "bold",
-    color: "seagreen"
+    color: "seagreen",
+    textAlign: "center"
   },
 
   subtitle: {
