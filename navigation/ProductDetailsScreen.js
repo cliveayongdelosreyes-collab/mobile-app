@@ -58,45 +58,55 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "ivory",
     padding: 20
   },
 
   image: {
     width: "100%",
     height: 300,
+    resizeMode: "contain",
     borderRadius: 15,
     marginBottom: 20
   },
 
   name: {
-    fontSize: 28,
-    fontWeight: "bold"
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "darkgreen"
   },
 
   category: {
     color: "gray",
-    marginTop: 5
+    fontSize: 15,
+    marginTop: 8
   },
 
   price: {
     color: "seagreen",
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
-    marginTop: 15
+    marginTop: 18
   },
 
   description: {
     fontSize: 16,
+    color: "dimgray",
+    lineHeight: 24,
     marginTop: 20,
-    marginBottom: 30
+    marginBottom: 35
   },
 
   button: {
     backgroundColor: "seagreen",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center"
+    padding: 17,
+    borderRadius: 15,
+    alignItems: "center",
+
+    shadowColor: "black",
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
+    elevation: 4
   },
 
   buttonText: {
