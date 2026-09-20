@@ -45,10 +45,10 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 90,
-    height: 90,
+    width: 120,
+    height: 120,
     borderRadius: 10,
-    marginRight: 15
+    resizeMode: "contain"
   },
 
   info: {
