@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, Image, Button, StyleSheet} from "react-native";
+import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native";
 
 const ProductDetailsScreen = ({ route }) => {
 
@@ -35,7 +35,7 @@ const ProductDetailsScreen = ({ route }) => {
       </Text>
 
 
-      <Button
+      <TouchableOpacity
         style={styles.button}
         onPress={() => addToCart(product)}
       >
@@ -44,7 +44,7 @@ const ProductDetailsScreen = ({ route }) => {
           Add to Cart
         </Text>
 
-      </Button>
+      </TouchableOpacity>
 
     </View>
   );
