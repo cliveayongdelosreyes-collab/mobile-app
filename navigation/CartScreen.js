@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "whitesmoke",
-    padding: 15
+    backgroundColor: "floralwhite",
+    padding: 20
   },
 
   title: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: "bold",
-    color: "seagreen",
+    color: "darkgreen",
     marginBottom: 20
   },
 
@@ -107,17 +107,23 @@ const styles = StyleSheet.create({
 
   cartItem: {
     backgroundColor: "white",
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    borderRadius: 18,
 
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+
+    shadowColor: "black",
+    shadowOpacity: 0.08,
+    shadowRadius: 5,
+    elevation: 3
   },
 
   image: {
     width: 60,
     height: 60,
+    resizeMode: "contain",
     borderRadius: 8,
     marginRight: 10
   },
@@ -128,34 +134,45 @@ const styles = StyleSheet.create({
 
   name: {
     fontSize: 17,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "darkslategray"
   },
 
   price: {
     color: "seagreen",
+    fontSize: 16,
+    fontWeight: "bold",
     marginTop: 5
   },
 
   removeButton: {
     backgroundColor: "mistyrose",
-    padding: 8,
-    borderRadius: 5
+    paddingVertical: 9,
+    paddingHorizontal: 12,
+    borderRadius: 12
   },
 
   removeText: {
-    color: "darkred"
+    color: "darkred",
+    fontWeight: "bold"
   },
 
   totalBox: {
-    backgroundColor: "white",
+    backgroundColor: "darkgreen",
     padding: 20,
     marginTop: 10,
-    borderRadius: 10
+    borderRadius: 18,
+
+    shadowColor: "black",
+    shadowOpacity: 0.12,
+    shadowRadius: 5,
+    elevation: 4
   },
 
   total: {
     fontSize: 22,
     fontWeight: "bold",
+    color: "white",
     textAlign: "right"
   }
 
