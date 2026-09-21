@@ -5,7 +5,6 @@ const ProductDetailsScreen = ({ route }) => {
 
   const { product, addToCart } = route.params;
 
-
   return (
     <View style={styles.container}>
 
