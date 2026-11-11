@@ -1,184 +1,167 @@
-import React, { useState } from "react";
-import {View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet} from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet} from "react-native";
 import products from "../data/products";
 import ProductCard from "../components/ProductCard";
 
+import { FavoritesContext } from "../context/FavoritesContext";
+import { CartContext } from "../context/CartContext";
+
 const ProductsScreen = ({ navigation }) => {
+  // State variable: remembers what the user is typing in the search box
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
+  // State variable: remembers which category button is selected ("All", "Dog", or "Cat")
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
+  // Access global context data directly
+  const { favorites, toggleFavorite } = useContext(FavoritesContext);
+  const { cart } = useContext(CartContext);
 
-  const filteredProducts = products.filter((product) => {
+  // Add up total quantity of all items in cart to show on top of the shopping cart button
+  const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    const matchesSearch =
-      product.name.toLowerCase().includes(search.toLowerCase());
-
+  // Filter products: only show items matching selected category AND typed search text
+  const filteredProducts = products.filter((item) => {
     const matchesCategory =
-      category === "All" || product.category === category;
-
-    return matchesSearch && matchesCategory;
+      selectedCategory === "All" || item.category.toLowerCase() === selectedCategory.toLowerCase();
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
   });
-
 
   return (
     <View style={styles.container}>
 
-      <Text style={styles.title}>
-         Pet Supplies
-      </Text>
+      {/* Header section with screen title and shopping cart badge */}
+      <View style={styles.headerBar}>
+        <View>
+          <Text style={styles.title}>Pet Supplies</Text>
+          <Text style={styles.subtitle}>Choose a product for your pet.</Text>
+        </View>
 
-
-      <TextInput
-        style={styles.search}
-        placeholder="Search products..."
-        value={search}
-        onChangeText={setSearch}
-      />
-
-      <View style={styles.categories}>
-
+        {/* Button that shows current cart total and opens the Cart Screen when tapped */}
         <TouchableOpacity
-          style={styles.categoryButton}
-          onPress={() => setCategory("All")}
+          style={styles.cartBadgeButton}
+          onPress={() => navigation.navigate("Cart")}
         >
-          <Text>All</Text>
+          <Text style={styles.cartBadgeText}>🛒 {totalCartItems}</Text>
         </TouchableOpacity>
-
-
-        <TouchableOpacity
-          style={styles.categoryButton}
-          onPress={() => setCategory("Dog")}
-        >
-          <Text>Dog</Text>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity
-          style={styles.categoryButton}
-          onPress={() => setCategory("Cat")}
-        >
-          <Text>Cat</Text>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity
-          style={styles.categoryButton}
-          onPress={() => setCategory("Bird")}
-        >
-          <Text>Bird</Text>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity
-          style={styles.categoryButton}
-          onPress={() => setCategory("Fish")}
-        >
-          <Text>Fish</Text>
-        </TouchableOpacity>
-
       </View>
 
+      {/* Search Input Box: updates search state every time a character is typed */}
+      <TextInput
+        style={styles.input}
+        placeholder="Search products..."
+        value={searchQuery}
+        onChangeText={(text) => setSearchQuery(text)}
+      />
 
+      {/* Category filter buttons row */}
+      <View style={styles.categoryContainer}>
+        {["All", "Dog", "Cat"].map((category) => (
+          <TouchableOpacity
+            key={category}
+            style={[
+              styles.categoryButton,
+              selectedCategory === category && styles.categoryButtonActive
+            ]}
+            onPress={() => setSelectedCategory(category)}
+          >
+            <Text
+              style={[
+                styles.categoryButtonText,
+                selectedCategory === category && styles.categoryButtonTextActive
+              ]}
+            >
+              {category}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* FlatList: efficiently renders only visible items on screen to keep app fast */}
       <FlatList
         data={filteredProducts}
-
         keyExtractor={(item) => item.id}
-
         renderItem={({ item }) => (
-
           <ProductCard
             product={item}
-
-            onPress={() =>
+            isFavorite={favorites.includes(item.id)}
+            onToggleFavorite={() => toggleFavorite(item.id)}
+            onView={() =>
               navigation.navigate("Details", {
                 product: item
               })
             }
           />
-
         )}
-
-        showsVerticalScrollIndicator={false}
       />
-
-
-      <TouchableOpacity
-        style={styles.cartButton}
-        onPress={() => navigation.navigate("Cart")}
-      >
-
-        <Text style={styles.cartButtonText}>
-          View Cart
-        </Text>
-
-      </TouchableOpacity>
 
     </View>
   );
 };
 
-
 export default ProductsScreen;
 
-
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    backgroundColor: "ivory",
-    padding: 20
+    backgroundColor: "whitesmoke",
+    padding: 15
   },
-
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "darkgreen",
-    marginBottom: 20
-  },
-
-  search: {
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderColor: "lightgray",
-    borderRadius: 15,
-    padding: 14,
-    fontSize: 16,
-    marginBottom: 18
-  },
-
-  categories: {
+  headerBar: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20
-  },
-
-  categoryButton: {
-    backgroundColor: "honeydew",
-    paddingVertical: 10,
-    paddingHorizontal: 13,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "lightgreen"
-  },
-
-  cartButton: {
-    backgroundColor: "seagreen",
-    padding: 16,
-    borderRadius: 15,
     alignItems: "center",
-    marginTop: 10,
-
-    shadowColor: "black",
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 4
+    marginBottom: 10
   },
-
-  cartButtonText: {
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "darkgreen"
+  },
+  subtitle: {
+    fontSize: 15,
+    color: "dimgray",
+    marginTop: 2
+  },
+  cartBadgeButton: {
+    backgroundColor: "seagreen",
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 20
+  },
+  cartBadgeText: {
     color: "white",
-    fontSize: 16,
+    fontWeight: "bold",
+    fontSize: 16
+  },
+  input: {
+    backgroundColor: "white",
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 10,
+    marginBottom: 15
+  },
+  categoryContainer: {
+    flexDirection: "row",
+    marginBottom: 15
+  },
+  categoryButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    backgroundColor: "#e0e0e0",
+    marginRight: 10
+  },
+  categoryButtonActive: {
+    backgroundColor: "seagreen"
+  },
+  categoryButtonText: {
+    color: "#333",
     fontWeight: "bold"
+  },
+  categoryButtonTextActive: {
+    color: "white"
   }
-
 });

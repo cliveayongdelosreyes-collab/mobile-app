@@ -1,179 +1,171 @@
-import React from "react";
+import React, { useContext } from "react";
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { CartContext } from "../context/CartContext";
 
-import {View, Text, Image, TouchableOpacity, FlatList, StyleSheet} from "react-native";
-
-
-const CartScreen = ({ route }) => {
-
-  const { cart, removeFromCart } = route.params;
-
-  const total = cart.reduce((sum, product) => {
-    return sum + product.price;
-  }, 0);
-
+const CartScreen = () => {
+  // Grab cart items, quantity change function, remove function, and total price calculator
+  const { cart, updateQuantity, removeFromCart, getTotalPrice } = useContext(CartContext);
 
   return (
     <View style={styles.container}>
-
-      <Text style={styles.title}>My Cart</Text>
+      {/* If cart is empty, show empty message; otherwise render list */}
       {cart.length === 0 ? (
-        <Text style={styles.empty}>Your cart is empty.</Text>
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>Your cart is empty!</Text>
+        </View>
       ) : (
+        <>
+          {/* List of items currently in cart */}
+          <FlatList
+            data={cart}
+            keyExtractor={(item) => item.product.id}
+            renderItem={({ item }) => (
+              <View style={styles.cartCard}>
+                <Image source={item.product.image} style={styles.image} />
+                
+                <View style={styles.info}>
+                  <Text style={styles.name}>{item.product.name}</Text>
+                  <Text style={styles.price}>₱{item.product.price}</Text>
 
-        <FlatList
-          data={cart}
+                  {/* Quantity adjustment buttons */}
+                  <View style={styles.qtyRow}>
+                    {/* Decrease quantity by 1 button */}
+                    <TouchableOpacity
+                      style={styles.qtyBtn}
+                      onPress={() => updateQuantity(item.product.id, -1)}
+                    >
+                      <Text style={styles.qtyBtnText}>-</Text>
+                    </TouchableOpacity>
 
-          keyExtractor={(item, index) =>
-            item.id + index
-          }
+                    {/* Current quantity display */}
+                    <Text style={styles.qtyText}>{item.quantity}</Text>
 
-          renderItem={({ item, index }) => (
+                    {/* Increase quantity by 1 button */}
+                    <TouchableOpacity
+                      style={styles.qtyBtn}
+                      onPress={() => updateQuantity(item.product.id, 1)}
+                    >
+                      <Text style={styles.qtyBtnText}>+</Text>
+                    </TouchableOpacity>
 
-            <View style={styles.cartItem}>
-
-              <Image
-                source={item.image}
-                style={styles.image}
-              />
-
-
-              <View style={styles.info}>
-
-                <Text style={styles.name}>
-                  {item.name}
-                </Text>
-
-                <Text style={styles.price}>
-                  ₱{item.price}
-                </Text>
-
+                    {/* Remove item button */}
+                    <TouchableOpacity
+                      style={styles.deleteBtn}
+                      onPress={() => removeFromCart(item.product.id)}
+                    >
+                      <Text style={styles.deleteText}>Remove</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
+            )}
+          />
 
-
-              <TouchableOpacity
-                style={styles.removeButton}
-                onPress={() => removeFromCart(index)}
-              >
-                <Text style={styles.removeText}>
-                     Remove
-                </Text>
+          {/* Bottom checkout bar displaying calculated total price */}
+          <View style={styles.footer}>
+            <Text style={styles.totalText}>Total: ₱{getTotalPrice()}</Text>
+            <TouchableOpacity style={styles.checkoutBtn}>
+              <Text style={styles.checkoutText}>Checkout</Text>
             </TouchableOpacity>
-
-            </View>
-
-          )}
-        />
-
+          </View>
+        </>
       )}
-
-
-      <View style={styles.totalBox}>
-
-        <Text style={styles.total}>
-          Total: ₱{total}
-        </Text>
-
-      </View>
-
     </View>
   );
 };
 
-
 export default CartScreen;
 
-
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    backgroundColor: "floralwhite",
-    padding: 20
+    backgroundColor: "whitesmoke",
+    padding: 15
   },
-
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "darkgreen",
-    marginBottom: 20
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   },
-
-  empty: {
-    textAlign: "center",
+  emptyText: {
     fontSize: 18,
-    color: "gray",
-    marginTop: 50
+    color: "gray"
   },
-
-  cartItem: {
+  cartCard: {
     backgroundColor: "white",
-    padding: 15,
-    marginBottom: 15,
-    borderRadius: 18,
-
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 10,
     flexDirection: "row",
-    alignItems: "center",
-
-    shadowColor: "black",
-    shadowOpacity: 0.08,
-    shadowRadius: 5,
-    elevation: 3
+    alignItems: "center"
   },
-
   image: {
-    width: 60,
-    height: 60,
-    resizeMode: "contain",
+    width: 70,
+    height: 70,
     borderRadius: 8,
     marginRight: 10
   },
-
   info: {
     flex: 1
   },
-
   name: {
-    fontSize: 17,
-    fontWeight: "bold",
-    color: "darkslategray"
-  },
-
-  price: {
-    color: "seagreen",
     fontSize: 16,
-    fontWeight: "bold",
-    marginTop: 5
-  },
-
-  removeButton: {
-    backgroundColor: "mistyrose",
-    paddingVertical: 9,
-    paddingHorizontal: 12,
-    borderRadius: 12
-  },
-
-  removeText: {
-    color: "darkred",
     fontWeight: "bold"
   },
-
-  totalBox: {
-    backgroundColor: "darkgreen",
-    padding: 20,
-    marginTop: 10,
-    borderRadius: 18,
-
-    shadowColor: "black",
-    shadowOpacity: 0.12,
-    shadowRadius: 5,
-    elevation: 4
-  },
-
-  total: {
-    fontSize: 22,
+  price: {
+    color: "seagreen",
     fontWeight: "bold",
+    marginTop: 2
+  },
+  qtyRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8
+  },
+  qtyBtn: {
+    backgroundColor: "#e0e0e0",
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+    borderRadius: 5
+  },
+  qtyBtnText: {
+    fontSize: 16,
+    fontWeight: "bold"
+  },
+  qtyText: {
+    marginHorizontal: 10,
+    fontWeight: "bold"
+  },
+  deleteBtn: {
+    marginLeft: "auto"
+  },
+  deleteText: {
+    color: "crimson",
+    fontWeight: "bold",
+    fontSize: 12
+  },
+  footer: {
+    backgroundColor: "white",
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  totalText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "darkgreen"
+  },
+  checkoutBtn: {
+    backgroundColor: "seagreen",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8
+  },
+  checkoutText: {
     color: "white",
-    textAlign: "right"
+    fontWeight: "bold"
   }
-
 });

@@ -1,117 +1,105 @@
-import React from "react";
+import React, { useContext } from "react";
 import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native";
+import { FavoritesContext } from "../context/FavoritesContext";
 
-const ProductDetailsScreen = ({ route }) => {
+const ProductDetailsScreen = ({ route, navigation }) => {
+  // Read product details passed from navigation route parameters
+  const { product } = route.params;
 
-  const { product, addToCart } = route.params;
+  // Access favorites state directly from global context
+  const { favorites, toggleFavorite } = useContext(FavoritesContext);
+  const isFav = favorites.includes(product.id);
 
   return (
     <View style={styles.container}>
-
+      {/* Product Image */}
       <Image
         source={product.image}
         style={styles.image}
       />
 
-
+      {/* Product Title */}
       <Text style={styles.name}>
         {product.name}
       </Text>
 
-
+      {/* Product Category */}
       <Text style={styles.category}>
-        For: {product.category}
+        Category: {product.category}
       </Text>
 
-
+      {/* Product Price */}
       <Text style={styles.price}>
         ₱{product.price}
       </Text>
 
-
+      {/* Product Description */}
       <Text style={styles.description}>
         {product.description}
       </Text>
-
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => addToCart(product)}
-      >
-
-        <Text style={styles.buttonText}>
-          Add to Cart
-        </Text>
-
-      </TouchableOpacity>
-
     </View>
   );
 };
 
-
 export default ProductDetailsScreen;
 
-
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    backgroundColor: "ivory",
-    padding: 20
+    backgroundColor: "white",
+    padding: 20,
+    alignItems: "center"
   },
-
   image: {
-    width: "100%",
-    height: 300,
+    width: 250,
+    height: 250,
     resizeMode: "contain",
-    borderRadius: 15,
     marginBottom: 20
   },
-
   name: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "darkgreen"
+    fontSize: 28,
+    fontWeight: "bold"
   },
-
   category: {
+    fontSize: 16,
     color: "gray",
-    fontSize: 15,
-    marginTop: 8
+    marginTop: 5
   },
-
   price: {
+    fontSize: 22,
     color: "seagreen",
-    fontSize: 26,
     fontWeight: "bold",
-    marginTop: 18
+    marginTop: 10
   },
-
   description: {
     fontSize: 16,
-    color: "dimgray",
-    lineHeight: 24,
-    marginTop: 20,
-    marginBottom: 35
+    textAlign: "center",
+    marginTop: 20
   },
-
+  favBtn: {
+    backgroundColor: "#f0f0f0",
+    padding: 12,
+    borderRadius: 10,
+    marginTop: 20,
+    width: "80%",
+    alignItems: "center"
+  },
+  favBtnActive: {
+    backgroundColor: "#ffe6e6"
+  },
+  favBtnText: {
+    fontWeight: "bold",
+    color: "#333"
+  },
   button: {
     backgroundColor: "seagreen",
-    padding: 17,
-    borderRadius: 15,
-    alignItems: "center",
-
-    shadowColor: "black",
-    shadowOpacity: 0.15,
-    shadowRadius: 5,
-    elevation: 4
+    padding: 12,
+    paddingHorizontal: 50,
+    borderRadius: 10,
+    marginTop: 30
   },
-
   buttonText: {
     color: "white",
-    fontSize: 17,
     fontWeight: "bold"
   }
-
 });

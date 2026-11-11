@@ -2,12 +2,11 @@ const products = [
   {
     id: "1",
     name: "Dog Food",
-    category: "Dog",    
+    category: "Dog",
     price: 350,
     description: "Healthy food for your dog.",
     image: require("../assets/dogfood.png")
   },
-
   {
     id: "2",
     name: "Dog Toy",
@@ -16,7 +15,6 @@ const products = [
     description: "A fun toy for your dog.",
     image: require("../assets/dogtoy.png")
   },
-
   {
     id: "3",
     name: "Cat Food",
@@ -25,32 +23,13 @@ const products = [
     description: "Tasty food for your cat.",
     image: require("../assets/catfood.png")
   },
-
   {
     id: "4",
     name: "Cat Toy",
     category: "Cat",
     price: 120,
-    description: "A simple toy for your cat.",
+    description: "A fun toy for your cat.",
     image: require("../assets/cattoy.png")
-  },
-
-  {
-    id: "5",
-    name: "Bird Food",
-    category: "Bird",
-    price: 100,
-    description: "Food for your pet bird.",
-    image: require("../assets/birdfood.png")
-  },
-
-  {
-    id: "6",
-    name: "Fish Food",
-    category: "Fish",
-    price: 90,
-    description: "Food for your pet fish.",
-    image: require("../assets/fishfood.png")
   }
 ];
 
