@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet} from "react-native";
+import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 import products from "../data/products";
 import ProductCard from "../components/ProductCard";
 
-import { FavoritesContext } from "../context/FavoritesContext";
+// Import CartContext to show the total cart badge count
 import { CartContext } from "../context/CartContext";
 
 const ProductsScreen = ({ navigation }) => {
@@ -13,8 +13,7 @@ const ProductsScreen = ({ navigation }) => {
   // State variable: remembers which category button is selected ("All", "Dog", or "Cat")
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // Access global context data directly
-  const { favorites, toggleFavorite } = useContext(FavoritesContext);
+  // Access the global cart list from CartContext
   const { cart } = useContext(CartContext);
 
   // Add up total quantity of all items in cart to show on top of the shopping cart button
@@ -85,8 +84,6 @@ const ProductsScreen = ({ navigation }) => {
         renderItem={({ item }) => (
           <ProductCard
             product={item}
-            isFavorite={favorites.includes(item.id)}
-            onToggleFavorite={() => toggleFavorite(item.id)}
             onView={() =>
               navigation.navigate("Details", {
                 product: item
