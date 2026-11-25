@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
-import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native";
-import { FavoritesContext } from "../context/FavoritesContext";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { CartContext } from "../context/CartContext";
 
 const ProductDetailsScreen = ({ route, navigation }) => {
   // Read product details passed from navigation route parameters
   const { product } = route.params;
 
-  // Access favorites state directly from global context
-  const { favorites, toggleFavorite } = useContext(FavoritesContext);
-  const isFav = favorites.includes(product.id);
+  // Grab the addToCart function from global CartContext
+  const { addToCart } = useContext(CartContext);
 
   return (
     <View style={styles.container}>
@@ -37,6 +36,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       <Text style={styles.description}>
         {product.description}
       </Text>
+    
     </View>
   );
 };
@@ -76,27 +76,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20
   },
-  favBtn: {
-    backgroundColor: "#f0f0f0",
+  cartButton: {
+    backgroundColor: "darkgreen",
     padding: 12,
+    paddingHorizontal: 50,
     borderRadius: 10,
-    marginTop: 20,
-    width: "80%",
-    alignItems: "center"
-  },
-  favBtnActive: {
-    backgroundColor: "#ffe6e6"
-  },
-  favBtnText: {
-    fontWeight: "bold",
-    color: "#333"
+    marginTop: 25
   },
   button: {
     backgroundColor: "seagreen",
     padding: 12,
     paddingHorizontal: 50,
     borderRadius: 10,
-    marginTop: 30
+    marginTop: 15
   },
   buttonText: {
     color: "white",

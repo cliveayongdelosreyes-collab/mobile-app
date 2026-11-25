@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { CartContext } from "../context/CartContext";
 
-const ProductCard = ({ product, onView, isFavorite, onToggleFavorite }) => {
+const ProductCard = ({ product, onView }) => {
   // Grab the addToCart function directly from global cart context
   const { addToCart } = useContext(CartContext);
 
@@ -15,17 +15,10 @@ const ProductCard = ({ product, onView, isFavorite, onToggleFavorite }) => {
       />
 
       <View style={styles.info}>
-        {/* Name and Heart Icon Row */}
-        <View style={styles.headerRow}>
-          <Text style={styles.name}>
-            {product.name}
-          </Text>
-
-          {/* Heart Button: shows filled heart if favorited, empty heart if not */}
-          <TouchableOpacity onPress={onToggleFavorite} style={styles.favButton}>
-            <Text style={styles.favIcon}>{isFavorite ? "❤️" : "🤍"}</Text>
-          </TouchableOpacity>
-        </View>
+        {/* Product Name */}
+        <Text style={styles.name}>
+          {product.name}
+        </Text>
 
         {/* Price display */}
         <Text style={styles.price}>
@@ -79,20 +72,9 @@ const styles = StyleSheet.create({
   info: {
     flex: 1
   },
-  headerRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
   name: {
     fontSize: 18,
     fontWeight: "bold"
-  },
-  favButton: {
-    padding: 4
-  },
-  favIcon: {
-    fontSize: 18
   },
   price: {
     fontSize: 16,
